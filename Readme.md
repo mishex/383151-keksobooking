@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
-* Студент: [Неопознанный енот](https://up.htmlacademy.ru/javascript/9/user/383151).
-* Наставник: `Неизвестно`.
+* Студент: [Сергей Мишин](https://up.htmlacademy.ru/javascript/9/user/383151).
+* Наставник: `Игорь Антонов`.
 
 ---
 
