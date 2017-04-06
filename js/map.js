@@ -76,7 +76,7 @@ var getRandomPlaces = function (n) {
       },
       'offer': {
         'title': title,
-        'address': {x: address.x, y: address.y}, //'' + address.x + ', ' + address.y,
+        'address': {x: address.x, y: address.y}, // '' + address.x + ', ' + address.y,
         'price': price,
         'type': type,
         'rooms': rooms,
