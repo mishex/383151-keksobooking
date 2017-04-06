@@ -42,6 +42,7 @@ var getElementFromArrayWithoutReturn = function(arr) {
   i = getRandomIndex(arr);
   var r = arr[i];
   arr = arr.slice(0, i).concat(arr.slice(i + 1, arr.length));
+
   return [arr, r];
 };
 
@@ -218,5 +219,3 @@ var replacedDialogPanel = dialogPanel.parentNode.replaceChild(lodge, dialogPanel
 // TODO: Delete replaced element replacedDialogPanel.parentNode.removeChild(dialogInsert);
 var dialogTitle = document.querySelector('.dialog__title');
 dialogTitle.querySelector('img').src = similarPlace.author.avatar;
-
-
