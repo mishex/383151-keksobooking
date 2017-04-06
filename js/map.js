@@ -3,21 +3,21 @@
 'use strict';
 
 var titles = [
-  "Большая уютная квартира",
-  "Маленькая неуютная квартира",
-  "Огромный прекрасный дворец",
-  "Маленький ужасный дворец",
-  "Красивый гостевой домик",
-  "Некрасивый негостеприимный домик",
-  "Уютное бунгало далеко от моря",
-  "Неуютное бунгало по колено в воде"
+  'Большая уютная квартира',
+  'Маленькая неуютная квартира',
+  'Огромный прекрасный дворец',
+  'Маленький ужасный дворец',
+  'Красивый гостевой домик',
+  'Некрасивый негостеприимный домик',
+  'Уютное бунгало далеко от моря',
+  'Неуютное бунгало по колено в воде'
 ];
 
-var type_array = ['flat', 'house', 'bungalo'];
-var checkin_array = ['2:00', '13:00', '14:00'];
-var checkout_array = ['2:00', '13:00', '14:00'];
+var typeArray = ['flat', 'house', 'bungalo'];
+var checkinArray = ['2:00', '13:00', '14:00'];
+var checkoutArray = ['2:00', '13:00', '14:00'];
 
-var features_array = [
+var featuresArray = [
   'wifi',
   'dishwasher',
   'parking',
@@ -26,32 +26,32 @@ var features_array = [
   'conditioner'
 ];
 
-var getRandomIndex = function(arr) {
+var getRandomIndex = function (arr) {
   return Math.floor(Math.random() * (arr.length));
 };
 
-var getRandomInt = function(a, b) {
+var getRandomInt = function (a, b) {
   return Math.floor(Math.random() * (b - a + 1)) + a;
 };
 
-var getElementFromArrayWithoutReturn = function(arr) {
+var getElementFromArrayWithoutReturn = function (arr) {
   if (!arr.length) {
     return [[], null];
   }
 
-  i = getRandomIndex(arr);
+  var i = getRandomIndex(arr);
   var r = arr[i];
   arr = arr.slice(0, i).concat(arr.slice(i + 1, arr.length));
 
   return [arr, r];
 };
 
-var getElementFromArrayWithReturn = function(arr) {
-  i = getRandomIndex(arr);
+var getElementFromArrayWithReturn = function (arr) {
+  var i = getRandomIndex(arr);
   return arr[i];
 };
 
-var getElementsFromArrayWithoutReturn = function(arr) {
+var getElementsFromArrayWithoutReturn = function (arr) {
   var n = Math.floor(Math.random() * (arr.length + 1));
   var r = [];
   for (var i = 0; i < n; ++i) {
@@ -64,39 +64,39 @@ var getElementsFromArrayWithoutReturn = function(arr) {
   return r;
 };
 
-var getRandomPlaces = function(n) {
-  var getAvatar = function(i) {
-    return  "./img/avatars/user" + (i < 10 ? '0' : '') + (i + 1) + '.png';
+var getRandomPlaces = function (n) {
+  var getAvatar = function (i) {
+    return './img/avatars/user' + (i < 10 ? '0' : '') + (i + 1) + '.png';
   };
 
-  var getRandomPlace = function(avatar, title, address, price, type, rooms, guests, checkin, checkout, features) {
-      return {
-        "author": {
-          "avatar": avatar
-        },
-        "offer": {
-          "title": title,
-          "address": {x: address.x, y: address.y},//'' + address.x + ', ' + address.y,
-          "price": price,
-          "type": type,
-          "rooms": rooms,
-          "guests": guests,
-          "checkin": checkin,
-          "checkout": checkout,
-          "features": features,
-          "description": '',
-          "photos": ''
-        }
-      };
+  var getRandomPlace = function (avatar, title, address, price, type, rooms, guests, checkin, checkout, features) {
+    return {
+      'author': {
+        'avatar': avatar
+      },
+      'offer': {
+        'title': title,
+        'address': {x: address.x, y: address.y}, //'' + address.x + ', ' + address.y,
+        'price': price,
+        'type': type,
+        'rooms': rooms,
+        'guests': guests,
+        'checkin': checkin,
+        'checkout': checkout,
+        'features': features,
+        'description': '',
+        'photos': ''
+      }
     };
+  };
 
-  var title_array = titles;
+  var titleArray = titles;
 
   var r = [];
   for (var i = 0; i < n; ++i) {
     var avatar = getAvatar(i);
-    var title = getElementFromArrayWithoutReturn(title_array);
-    title_array = title[0];
+    var title = getElementFromArrayWithoutReturn(titleArray);
+    titleArray = title[0];
     title = title[1];
 
     var location = {
@@ -105,12 +105,12 @@ var getRandomPlaces = function(n) {
     };
 
     var price = Math.floor(Math.random() * (1000000 - 1000)) + 1000;
-    var type = getElementFromArrayWithReturn(type_array);
+    var type = getElementFromArrayWithReturn(typeArray);
     var rooms = Math.floor(1 + Math.random() * 5);
     var guests = Math.floor(1 + Math.random() * 10);
-    var checkin = getElementFromArrayWithReturn(checkin_array);
-    var checkout = getElementFromArrayWithReturn(checkout_array);
-    var features = getElementsFromArrayWithoutReturn(features_array);
+    var checkin = getElementFromArrayWithReturn(checkinArray);
+    var checkout = getElementFromArrayWithReturn(checkoutArray);
+    var features = getElementsFromArrayWithoutReturn(featuresArray);
 
     r[i] = getRandomPlace(avatar, title, location, price, type, rooms, guests, checkin, checkout, features);
   }
@@ -143,8 +143,8 @@ var renderPin = function (place) {
 
 var pinFragment = document.createDocumentFragment();
 
-for (var i = 0; i < similarPlaces.length; i++) {
-  var pinElement = renderPin(similarPlaces[i]);
+for (var index = 0; index < similarPlaces.length; index++) {
+  var pinElement = renderPin(similarPlaces[index]);
   pinFragment.appendChild(pinElement);
 }
 
@@ -153,12 +153,12 @@ pinInsert.appendChild(pinFragment);
 
 var lodgeTemplace = document.querySelector('#lodge-template').content;
 
-var getLodge = function(place) {
-  var getAddressPlaceAsString = function() {
+var getLodge = function (place) {
+  var getAddressPlaceAsString = function () {
     return place.offer.address.x + ', ' + place.offer.address.y;
   };
 
-  var getTypePlaceAsString = function() {
+  var getTypePlaceAsString = function () {
     if (place.offer.type === 'flat') {
       return 'Квартира';
     } else if (place.offer.type === 'bungalo') {
@@ -170,15 +170,15 @@ var getLodge = function(place) {
     }
   };
 
-  var getRoomsGuestsPlaceAsString = function() {
+  var getRoomsGuestsPlaceAsString = function () {
     return 'Для ' + place.offer.guests + ' гостей в ' + place.offer.rooms + ' комнатах';
   };
 
-  var getCheckInOutPlaceAsString = function() {
+  var getCheckInOutPlaceAsString = function () {
     return 'Заезд после ' + place.offer.checkin + ' выезд до ' + place.offer.checkout;
   };
 
-  var getFeaturesPlaceElement = function() {
+  var getFeaturesPlaceElement = function () {
     var featureFragment = document.createDocumentFragment();
     var features = place.offer.features;
     for (var i = 0; i < features.length; ++i) {
@@ -215,7 +215,8 @@ var getLodge = function(place) {
 var similarPlace = similarPlaces[0];
 var lodge = getLodge(similarPlace);
 var dialogPanel = document.querySelector('.dialog__panel');
-var replacedDialogPanel = dialogPanel.parentNode.replaceChild(lodge, dialogPanel);
+// var replacedDialogPanel =
+dialogPanel.parentNode.replaceChild(lodge, dialogPanel);
 // TODO: Delete replaced element replacedDialogPanel.parentNode.removeChild(dialogInsert);
 var dialogTitle = document.querySelector('.dialog__title');
 dialogTitle.querySelector('img').src = similarPlace.author.avatar;
