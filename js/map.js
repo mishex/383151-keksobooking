@@ -145,6 +145,7 @@ var pinFragment = document.createDocumentFragment();
 
 for (var index = 0; index < similarPlaces.length; index++) {
   var pinElement = renderPin(similarPlaces[index]);
+  pinElement.id = 'pin-' + index;
   pinFragment.appendChild(pinElement);
 }
 
@@ -212,11 +213,32 @@ var getLodge = function (place) {
   return lodge;
 };
 
-var similarPlace = similarPlaces[0];
-var lodge = getLodge(similarPlace);
-var dialogPanel = document.querySelector('.dialog__panel');
-// var replacedDialogPanel =
-dialogPanel.parentNode.replaceChild(lodge, dialogPanel);
-// TODO: Delete replaced element replacedDialogPanel.parentNode.removeChild(dialogInsert);
-var dialogTitle = document.querySelector('.dialog__title');
-dialogTitle.querySelector('img').src = similarPlace.author.avatar;
+function showDialog (iSimilarPlace) {
+  var lodge = getLodge(similarPlaces[iSimilarPlace]);
+  var dialogPanel = document.querySelector('.dialog__panel');
+  var replacedDialogPanel = dialogPanel.parentNode.replaceChild(lodge, dialogPanel);
+  replacedDialogPanel = null;
+  var dialogTitle = document.querySelector('.dialog__title');
+  dialogTitle.querySelector('img').src = similarPlace.author.avatar;
+}
+
+function activatePin (pin) {
+  var activePin = document.querySelector('.pin--active');
+  activePin.classList.remove('pin--active');
+  pin.classList.add('pin--active');
+  showDialog(pin.id);
+}
+
+function hideDialog () {
+  var dialog = document.querySelector('.dialog');
+  dialog.style.display = 'none';
+}
+
+function deactivatePin (pin) {
+  pin.classList.remove('pin--active');
+  hideDialog();
+}
+
+
+
+
