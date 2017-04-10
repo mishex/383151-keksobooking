@@ -216,17 +216,18 @@ var getLodge = function (place) {
 
 var dialog = document.querySelector('.dialog');
 
-function showDialog (iSimilarPlace) {
+function showDialog(iSimilarPlace) {
   var lodge = getLodge(similarPlaces[iSimilarPlace]);
   var dialogPanel = dialog.querySelector('.dialog__panel');
-  var replacedDialogPanel = dialogPanel.parentNode.replaceChild(lodge, dialogPanel);
-  replacedDialogPanel = null;
+  // var replacedDialogPanel =
+  dialogPanel.parentNode.replaceChild(lodge, dialogPanel);
+  // replacedDialogPanel = null;
   var dialogTitle = dialog.querySelector('.dialog__title');
   dialogTitle.querySelector('img').src = similarPlaces[iSimilarPlace].author.avatar;
   dialog.style.display = '';
 }
 
-function activatePin (pin) {
+function activatePin(pin) {
   var activePin = tokioPinMap.querySelector('.pin--active');
   if (activePin) {
     activePin.classList.remove('pin--active');
@@ -237,11 +238,11 @@ function activatePin (pin) {
   }
 }
 
-function hideDialog () {
+function hideDialog() {
   dialog.style.display = 'none';
 }
 
-function deactivatePin () {
+function deactivatePin() {
   tokioPinMap.querySelector('.pin--active').classList.remove('pin--active');
   hideDialog();
 }
