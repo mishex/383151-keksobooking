@@ -135,6 +135,7 @@ var getPinTemplate = function () {
 var renderPin = function (place) {
   var pin = getPinTemplate();
   pin.style = 'left: ' + place.offer.address.x + 'px; top: ' + place.offer.address.y + 'px';
+  pin.tabIndex = '0';
   var pinImg = pin.querySelector('img');
   pinImg.src = place.author.avatar;
 
@@ -149,8 +150,8 @@ for (var index = 0; index < similarPlaces.length; index++) {
   pinFragment.appendChild(pinElement);
 }
 
-var pinInsert = document.querySelector('.tokyo__pin-map');
-pinInsert.appendChild(pinFragment);
+var tokioPinMap = document.querySelector('.tokyo__pin-map');
+tokioPinMap.appendChild(pinFragment);
 
 var lodgeTemplace = document.querySelector('#lodge-template').content;
 
@@ -213,32 +214,68 @@ var getLodge = function (place) {
   return lodge;
 };
 
+var dialog = document.querySelector('.dialog');
+
 function showDialog (iSimilarPlace) {
   var lodge = getLodge(similarPlaces[iSimilarPlace]);
-  var dialogPanel = document.querySelector('.dialog__panel');
+  var dialogPanel = dialog.querySelector('.dialog__panel');
   var replacedDialogPanel = dialogPanel.parentNode.replaceChild(lodge, dialogPanel);
   replacedDialogPanel = null;
-  var dialogTitle = document.querySelector('.dialog__title');
-  dialogTitle.querySelector('img').src = similarPlace.author.avatar;
+  var dialogTitle = dialog.querySelector('.dialog__title');
+  dialogTitle.querySelector('img').src = similarPlaces[iSimilarPlace].author.avatar;
+  dialog.style.display = '';
 }
 
 function activatePin (pin) {
-  var activePin = document.querySelector('.pin--active');
-  activePin.classList.remove('pin--active');
+  var activePin = tokioPinMap.querySelector('.pin--active');
+  if (activePin) {
+    activePin.classList.remove('pin--active');
+  }
   pin.classList.add('pin--active');
-  showDialog(pin.id);
+  if (pin.id.includes('pin-')) {
+    showDialog(pin.id.split('pin-')[1]);
+  }
 }
 
 function hideDialog () {
-  var dialog = document.querySelector('.dialog');
   dialog.style.display = 'none';
 }
 
-function deactivatePin (pin) {
-  pin.classList.remove('pin--active');
+function deactivatePin () {
+  tokioPinMap.querySelector('.pin--active').classList.remove('pin--active');
   hideDialog();
 }
 
+tokioPinMap.addEventListener('click', function (evt) {
+  if (evt.target.classList.contains('pin')) {
+    activatePin(evt.target);
+  } else if (evt.target.parentNode.classList.contains('pin')) {
+    activatePin(evt.target.parentNode);
+  }
+});
 
+dialog.querySelector('.dialog__close').addEventListener('click', function () {
+  deactivatePin();
+});
 
+tokioPinMap.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === 13) {
+    if (evt.target.classList.contains('pin')) {
+      activatePin(evt.target);
+    }
+  }
+});
 
+dialog.querySelector('.dialog__close').addEventListener('keydown', function (evt) {
+  if (evt.keyCode === 13) {
+    deactivatePin();
+  }
+});
+
+document.querySelector('.tokyo').addEventListener('keydown', function (evt) {
+  if (evt.keyCode === 27) {
+    deactivatePin();
+  }
+});
+
+activatePin(tokioPinMap.querySelector('#pin-0'));
