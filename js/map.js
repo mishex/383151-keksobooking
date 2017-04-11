@@ -279,4 +279,15 @@ document.querySelector('.tokyo').addEventListener('keydown', function (evt) {
   }
 });
 
+var notice = document.querySelector('.notice');
+var formNotice = notice.querySelector('.notice__form');
+var checkin = formNotice.querySelector('#time');
+var checkout = formNotice.querySelector('#timeout');
+
+formNotice.addEventListener('click', function (evt) {
+  if (evt.target.id.inclides('time-')) {
+
+  }
+});
+
 activatePin(tokioPinMap.querySelector('#pin-0'));
