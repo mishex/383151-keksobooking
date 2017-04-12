@@ -339,7 +339,7 @@ function onFormNoticeInvald(evt) {
 }
 
 function restoreDefaultFormNotice() {
-  titleNotice.value = "";
+  titleNotice.value = '';
   titleNotice.style.borderWidth = '1px';
   titleNotice.style.borderColor = 'd9d9d3';
 
