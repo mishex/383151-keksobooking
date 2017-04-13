@@ -337,8 +337,8 @@ function makeElementNoticeRed(element) {
 }
 
 function onFormNoticeInvald(evt) {
+  // evt.preventDefault();
   makeElementNoticeRed(evt.target);
-  evt.preventDefault();
 }
 
 function restoreDefaultFormNotice() {
@@ -367,6 +367,6 @@ function restoreDefaultFormNotice() {
 }
 
 function onFormNoticeSubmit(evt) {
-  restoreDefaultFormNotice();
   evt.preventDefault();
+  restoreDefaultFormNotice();
 }
