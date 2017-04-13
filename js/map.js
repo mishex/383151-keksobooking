@@ -36,6 +36,9 @@ var featuresArray = [
   'conditioner'
 ];
 
+var ENTER_KEY_CODE = 13;
+var ESC_KEY_CODE = 27;
+
 // ------*** Elements in html ***------
 
 var tokyo = document.querySelector('.tokyo');
@@ -268,7 +271,7 @@ function onDialogCloseClick() {
 }
 
 function onPinPressEnter(evt) {
-  if (evt.keyCode === 13) {
+  if (evt.keyCode === ENTER_KEY_CODE) {
     if (evt.target.classList.contains('pin')) {
       activatePin(evt.target);
     }
@@ -276,13 +279,13 @@ function onPinPressEnter(evt) {
 }
 
 function onDialogClosePressEnter(evt) {
-  if (evt.keyCode === 13) {
+  if (evt.keyCode === ENTER_KEY_CODE) {
     deactivatePin();
   }
 }
 
 function onPinPressEsc(evt) {
-  if (evt.keyCode === 27) {
+  if (evt.keyCode === ESC_KEY_CODE) {
     deactivatePin();
   }
 }
@@ -341,12 +344,15 @@ function onFormNoticeInvald(evt) {
 function restoreDefaultFormNotice() {
   titleNotice.value = '';
   titleNotice.style.borderWidth = '1px';
-  titleNotice.style.borderColor = 'd9d9d3';
+  titleNotice.style.borderColor = '#d9d9d3';
 
   typeNotice.selectedIndex = typeNotice.querySelector('option[selected]').index;
 
   priceNotice.min = 1000;
   priceNotice.value = 1000;
+  priceNotice.style.borderWidth = '1px';
+  priceNotice.style.borderColor = '#d9d9d3';
+
   roomNumber.selectedIndex = roomNumber.querySelector('option[selected]').index;
   capacityNotice.selectedIndex = capacityNotice.querySelector('option[selected]').index;
   checkinNotice.selectedIndex = checkinNotice.querySelector('option[selected]').index;
