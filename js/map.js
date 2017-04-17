@@ -26,8 +26,8 @@ window.tokyoMap = (function () {
   }
 
   function initMap() {
-    pinPlaces = getRandomPlaces(NUMBER_PIN);
-    insertPinsFragment(pinPlaces, tokyoPinMap);
+    pinPlaces = window.getRandomPlaces(NUMBER_PIN);
+    window.insertPinsFragment(pinPlaces, tokyoPinMap);
     activatePin(tokyoPinMap.querySelector('#pin-0'));
   }
 
@@ -54,7 +54,7 @@ window.tokyoMap = (function () {
   function showDialog(pinPlacesIndex) {
     dialogPanel = dialog.querySelector('.dialog__panel');
     dialogTitle = dialog.querySelector('.dialog__title');
-    dialogPanel.parentNode.replaceChild(getLodge(pinPlaces[pinPlacesIndex]), dialogPanel);
+    dialogPanel.parentNode.replaceChild(window.getLodge(pinPlaces[pinPlacesIndex]), dialogPanel);
     dialogTitle.querySelector('img').src = pinPlaces[pinPlacesIndex].author.avatar;
     dialog.style.display = '';
   }

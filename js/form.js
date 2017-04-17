@@ -104,10 +104,10 @@ window.formNoticePublishing = (function () {
   }
 
   return {
-    setFormBehavior : setFormNoticeRelationship,
+    setFormBehavior: setFormNoticeRelationship,
     setFormSubmitBehavior: setFormNoticeSubmitBehavior
   };
 })();
 
-formNoticePublishing.setFormBehavior();
-formNoticePublishing.setFormSubmitBehavior();
+window.formNoticePublishing.setFormBehavior();
+window.formNoticePublishing.setFormSubmitBehavior();
