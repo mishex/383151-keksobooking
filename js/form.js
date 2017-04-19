@@ -103,6 +103,6 @@ window.formNoticePublishing = (function () {
     addressNotice.value = 'x: ' + x + ', y: ' + y;
   }
 
-  return {setAddress: setAddressNotice}
+  return {setAddress: setAddressNotice};
 
 })();

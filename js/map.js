@@ -111,14 +111,14 @@ window.tokyoMap = (function () {
   }
 
   // Chrome doesn't allow access to event.dataTransfer in dragover
-  var offset_data;
+  var offsetData;
 
   function onMainPinStartDrag(evt) {
     if (evt.target.tagName.toLowerCase() === 'img') {
       var style = window.getComputedStyle(evt.target.parentNode, null);
-      offset_data = (parseInt(style.getPropertyValue("left"), 10) - evt.clientX);
-      offset_data += ',' + (parseInt(style.getPropertyValue("top"), 10) - evt.clientY);
-      evt.dataTransfer.setData("text/plain", offset_data);
+      offsetData = (parseInt(style.getPropertyValue('left'), 10) - evt.clientX);
+      offsetData += ',' + (parseInt(style.getPropertyValue('top'), 10) - evt.clientY);
+      evt.dataTransfer.setData('text/plain', offsetData);
     }
   }
 
@@ -135,7 +135,7 @@ window.tokyoMap = (function () {
   }
 
   function onTokyoPinMapDragOver(evt) {
-    var offset = offset_data.split(',');
+    var offset = offsetData.split(',');
 
     var left = evt.clientX + parseInt(offset[0], 10);
     var top = evt.clientY + parseInt(offset[1], 10);
@@ -147,7 +147,7 @@ window.tokyoMap = (function () {
   }
 
   function onTokyoPinMapDrop(evt) {
-    var offset = evt.dataTransfer.getData("text/plain").split(',');
+    var offset = evt.dataTransfer.getData('text/plain').split(',');
 
     var left = evt.clientX + parseInt(offset[0], 10);
     var top = evt.clientY + parseInt(offset[1], 10);
