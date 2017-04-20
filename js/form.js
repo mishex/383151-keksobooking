@@ -80,7 +80,6 @@ window.formNoticePublishing = (function () {
   }
 
   function syncSelectOptValueWithSelectOptValue(fromElement, toElement, valuesFromElement, valuesToElement) {
-    debugger;
     var valueFromElement = fromElement.options[roomNumber.selectedIndex].value;
 
     valuesFromElement.forEach(function (val, index) {

@@ -1,3 +1,7 @@
+// show-card.js
+
+'use strict';
+
 window.showDialog = (function () {
   var dialog = document.querySelector('.dialog');
   var dialogTitle = dialog.querySelector('.dialog__title');
