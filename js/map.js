@@ -20,8 +20,6 @@ window.tokyoMap = (function () {
   var tokyo = document.querySelector('.tokyo');
   var dialog = tokyo.querySelector('.dialog');
   var tokyoPinMap = tokyo.querySelector('.tokyo__pin-map');
-  var dialogPanel = dialog.querySelector('.dialog__panel');
-  var dialogTitle = dialog.querySelector('.dialog__title');
   var mainPin = tokyoPinMap.querySelector('.pin__main');
 
   var cbMoveMainPin;
@@ -38,6 +36,10 @@ window.tokyoMap = (function () {
     dialog.querySelector('.dialog__close').addEventListener('keydown', onDialogClosePressEnter);
     tokyo.addEventListener('keydown', onPinPressEsc);
     mainPin.addEventListener('dragstart', onMainPinStartDrag);
+  }
+
+  function getPinPlace(indexPinPlaces) {
+    return pinPlaces[indexPinPlaces];
   }
 
   function initMap() {
@@ -57,21 +59,13 @@ window.tokyoMap = (function () {
     pin.classList.add('pin--active');
 
     if (pin.id.includes('pin-')) {
-      showDialog(pin.id.split('pin-')[1]);
+      window.showDialog(pinPlaces[parseInt(pin.id.split('pin-')[1], 10)]);
     }
   }
 
   function deactivatePin() {
     tokyoPinMap.querySelector('.pin--active').classList.remove('pin--active');
     hideDialog();
-  }
-
-  function showDialog(pinPlacesIndex) {
-    dialogPanel = dialog.querySelector('.dialog__panel');
-    dialogTitle = dialog.querySelector('.dialog__title');
-    dialogPanel.parentNode.replaceChild(window.getLodge(pinPlaces[pinPlacesIndex]), dialogPanel);
-    dialogTitle.querySelector('img').src = pinPlaces[pinPlacesIndex].author.avatar;
-    dialog.style.display = '';
   }
 
   function hideDialog() {
@@ -160,7 +154,8 @@ window.tokyoMap = (function () {
 
   return {
     init: initMap,
-    setEvent: setEventMap
+    setEvent: setEventMap,
+    getPinPlace: getPinPlace
   };
 })();
 

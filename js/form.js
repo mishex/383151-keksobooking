@@ -17,45 +17,6 @@ window.formNoticePublishing = (function () {
   var roomNumber = formNotice.querySelector('#room_number');
   var capacityNotice = formNotice.querySelector('#capacity');
 
-  function onCheckinNoticeChange() {
-    checkoutNotice.selectedIndex = checkinNotice.selectedIndex;
-  }
-
-  function onCheckoutNoticeChange() {
-    checkinNotice.selectedIndex = checkoutNotice.selectedIndex;
-  }
-
-  function ontypeNoticeChange() {
-    var valueTypeNotice = typeNotice.options[typeNotice.selectedIndex].textContent;
-    switch (valueTypeNotice) {
-      case 'Квартира':
-        priceNotice.min = 1000;
-        priceNotice.value = 1000;
-        break;
-      case 'Дворец':
-        priceNotice.min = 10000;
-        priceNotice.value = 10000;
-        break;
-      default:
-        priceNotice.min = 0;
-        priceNotice.value = 0;
-        break;
-    }
-  }
-
-  function onRoomNumberChange() {
-    if (roomNumber.options[roomNumber.selectedIndex].value > 1) {
-      capacityNotice.selectedIndex = capacityNotice.querySelector('option[value="3"]').index;
-    } else {
-      capacityNotice.selectedIndex = capacityNotice.querySelector('option[value="0"]').index;
-    }
-  }
-
-  checkinNotice.addEventListener('change', onCheckinNoticeChange);
-  checkoutNotice.addEventListener('change', onCheckoutNoticeChange);
-  typeNotice.addEventListener('change', ontypeNoticeChange);
-  roomNumber.addEventListener('change', onRoomNumberChange);
-
   function makeElementNoticeRed(element) {
     element.style.borderWidth = '10px';
     element.style.borderColor = 'red';
@@ -102,6 +63,37 @@ window.formNoticePublishing = (function () {
   function setAddressNotice(x, y) {
     addressNotice.value = 'x: ' + x + ', y: ' + y;
   }
+
+  function syncSameSelect(fromElement, toElement) {
+    toElement.selectedIndex = fromElement.selectedIndex;
+  }
+
+  function syncSelectValueWithMin(fromElement, toElement, valuesFromElement, minToElement) {
+    var valueFromElement = fromElement.options[fromElement.selectedIndex].textContent;
+
+    valuesFromElement.forEach(function (val, index) {
+      if (valueFromElement === val) {
+        toElement.min = minToElement[index];
+        toElement.value = minToElement[index];
+      }
+    });
+  }
+
+  function syncSelectOptValueWithSelectOptValue(fromElement, toElement, valuesFromElement, valuesToElement) {
+    debugger;
+    var valueFromElement = fromElement.options[roomNumber.selectedIndex].value;
+
+    valuesFromElement.forEach(function (val, index) {
+      if (val === valueFromElement) {
+        toElement.selectedIndex = toElement.querySelector('option[value="' + valuesToElement[index] + '"]').index;
+      }
+    });
+  }
+
+  window.synchronizeFields(checkinNotice, checkoutNotice, 'change', syncSameSelect);
+  window.synchronizeFields(checkoutNotice, checkinNotice, 'change', syncSameSelect);
+  window.synchronizeFields(typeNotice, priceNotice, 'change', syncSelectValueWithMin, ['Квартира', 'Дворец', 'Лачуга'], [1000, 10000, 0]);
+  window.synchronizeFields(roomNumber, capacityNotice, 'change', syncSelectOptValueWithSelectOptValue, ['1', '2', '100'], ['0', '3', '3']);
 
   return {setAddress: setAddressNotice};
 
