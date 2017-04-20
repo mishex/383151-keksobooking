@@ -65,8 +65,10 @@
         </fieldset>
       </form>
     </div>
-    <div class="tokyo__pin-map">
-      <div class="pin  pin__main" style="display: none"><img src="img/main-pin-image.png" alt="Main Pin" class="rounded" width="40" height="44"></div>
+    <div class="tokyo__pin-map" dropzone="move">
+      <div class="pin  pin__main" id="dragme">
+        <img src="img/main-pin-image.png" alt="Main Pin" class="rounded" width="40" height="44" draggable="true">
+      </div>
     </div>
     <div id="offer-dialog" class="dialog">
       <div class="dialog__title"><img src="img/avatars/user01.png" alt="Avatar" width="70" height="70">
@@ -109,7 +111,9 @@
           <input type="file">
           <span class="drop-zone">Загрузите или&nbsp;перетащите сюда фото</span>
         </div>
-        <p class="notice__info">Заполните все обязательные поля, назначьте цену, загрузите фотографии. Придумайте интересное описание. Оно сделает объявление более живым и привлекательным. Получившееся объявление должно давать гостям полное представление о вашем жилье.</p>
+        <p class="notice__info">Заполните все обязательные поля, назначьте цену, загрузите фотографии. Придумайте
+          интересное описание. Оно сделает объявление более живым и привлекательным. Получившееся объявление должно
+          давать гостям полное представление о вашем жилье.</p>
       </div>
     </div>
     <form class="notice__form" autocomplete="off">
@@ -153,13 +157,14 @@
           </div>
           <div class="form__element  form__element--wide">
             <label for="description">Описание (не обязательно)</label>
-            <textarea id="description" placeholder="Здесь расскажите о том, какое ваше жилье замечательное и вообще"></textarea>
+            <textarea id="description"
+                      placeholder="Здесь расскажите о том, какое ваше жилье замечательное и вообще"></textarea>
           </div>
         </div>
         <div class="form__panel">
           <div class="form__element  form__element--wide">
             <label for="address">Адрес</label>
-            <input id="address" type="text">
+            <input id="address" type="text" readonly>
           </div>
           <div class="form__row">
             <div class="form__element">
@@ -243,13 +248,21 @@
 <footer class="footer container">
   <div class="center-wrapper">
     <section class="footer-logo">
-      Сделано в <a tabindex="1" href="https://htmlacademy.ru" class="footer-logo-link"><img src="img/ha-logo.png" class="footer-logo-image" width="130" alt="HTML Academy"/>HTML Academy</a> &copy; 2017
+      Сделано в <a tabindex="1" href="https://htmlacademy.ru" class="footer-logo-link"><img src="img/ha-logo.png"
+                                                                                            class="footer-logo-image"
+                                                                                            width="130"
+                                                                                            alt="HTML Academy"/>HTML
+      Academy</a> &copy; 2017
     </section>
     <nav class="footer-social">
-      <a href="https://twitter.com/htmlacademy_ru" class="footer-social-item footer-social-item-twitter" target="_blank" rel="nofollow">Twitter</a>
-      <a href="https://www.instagram.com/htmlacademy/" class="footer-social-item footer-social-item-instagram" target="_blank" rel="nofollow">Instagtam</a>
-      <a href="https://www.facebook.com/htmlacademy" class="footer-social-item footer-social-item-facebook" target="_blank" rel="nofollow">Facebook</a>
-      <a href="https://vk.com/htmlacademy" class="footer-social-item footer-social-item-vk" target="_blank" rel="nofollow">VK</a>
+      <a href="https://twitter.com/htmlacademy_ru" class="footer-social-item footer-social-item-twitter" target="_blank"
+         rel="nofollow">Twitter</a>
+      <a href="https://www.instagram.com/htmlacademy/" class="footer-social-item footer-social-item-instagram"
+         target="_blank" rel="nofollow">Instagtam</a>
+      <a href="https://www.facebook.com/htmlacademy" class="footer-social-item footer-social-item-facebook"
+         target="_blank" rel="nofollow">Facebook</a>
+      <a href="https://vk.com/htmlacademy" class="footer-social-item footer-social-item-vk" target="_blank"
+         rel="nofollow">VK</a>
     </nav>
   </div>
 </footer>
@@ -270,11 +283,11 @@
   </div>
 </template>
 
+<script src="./js/form.js"></script>
 <script src="./js/data.js"></script>
 <script src="./js/pin.js"></script>
 <script src="./js/card.js"></script>
 <script src="./js/map.js"></script>
-<script src="./js/form.js"></script>
 
 </body>
 </html>
