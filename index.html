@@ -128,9 +128,9 @@
             <div class="form__element">
               <label for="type">Тип жилья</label>
               <select id="type">
-                <option selected>Квартира</option>
-                <option>Лачуга</option>
-                <option>Дворец</option>
+                <option value="flat" selected>Квартира</option>
+                <option value="bungalo">Лачуга</option>
+                <option value="palace">Дворец</option>
               </select>
             </div>
             <div class="form__element">
@@ -170,17 +170,17 @@
             <div class="form__element">
               <label for="time">Время заезда и выезда</label>
               <select id="time">
-                <option id="time-1" selected>После 12</option>
-                <option id="time-2">После 13</option>
-                <option id="time=3">После 14</option>
+                <option id="time-1" value="12" selected>После 12</option>
+                <option id="time-2" value="13">После 13</option>
+                <option id="time=3" value="14">После 14</option>
               </select>
             </div>
             <div class="form__element">
               <label for="timeout">&nbsp;</label>
               <select id="timeout" title="Time to go out">
-                <option selected>Выезд до 12</option>
-                <option>Выезд до 13</option>
-                <option>Выезд до 14</option>
+                <option value="12" selected>Выезд до 12</option>
+                <option value="13">Выезд до 13</option>
+                <option value="14">Выезд до 14</option>
               </select>
             </div>
           </div>
@@ -283,9 +283,11 @@
   </div>
 </template>
 
+<script src="./js/synchronize-fields.js"></script>
 <script src="./js/form.js"></script>
 <script src="./js/data.js"></script>
 <script src="./js/pin.js"></script>
+<script src="./js/show-card.js"></script>
 <script src="./js/card.js"></script>
 <script src="./js/map.js"></script>
 
