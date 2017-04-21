@@ -69,7 +69,7 @@ window.formNoticePublishing = (function () {
   }
 
   function syncValueAndMin(element, value) {
-    syncValue(element, value)
+    syncValue(element, value);
     element.min = value;
   }
 
