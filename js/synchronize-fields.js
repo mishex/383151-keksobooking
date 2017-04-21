@@ -2,12 +2,13 @@
 
 'use strict';
 
-window.synchronizeFields = function (fromElement, toElement, eventType, cb, valuesFromElement, valuesToElement) {
-  function onFromElementSomewhatHappen(evt) {
-    cb(fromElement, toElement, valuesFromElement, valuesToElement);
-  }
-
+window.synchronizeFields = (function (fromElement, toElement, valuesFromElement, valuesToElement, cb) {
   if (typeof cb === 'function') {
-    fromElement.addEventListener(eventType, onFromElementSomewhatHappen);
+    for (var i = 0; i < valuesFromElement.length; ++i) {
+      if (fromElement.value === valuesFromElement[i]) {
+        cb(toElement, valuesToElement[i]);
+        break;
+      }
+    }
   }
-};
+});

@@ -59,7 +59,7 @@ window.tokyoMap = (function () {
     pin.classList.add('pin--active');
 
     if (pin.id.includes('pin-')) {
-      window.showDialog(pinPlaces[parseInt(pin.id.split('pin-')[1], 10)]);
+      window.showDialog(pinPlaces[parseInt(pin.id.split('pin-')[1], 10)], window.getLodge);
     }
   }
 

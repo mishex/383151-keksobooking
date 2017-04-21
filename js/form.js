@@ -64,35 +64,30 @@ window.formNoticePublishing = (function () {
     addressNotice.value = 'x: ' + x + ', y: ' + y;
   }
 
-  function syncSameSelect(fromElement, toElement) {
-    toElement.selectedIndex = fromElement.selectedIndex;
+  function syncValue(element, value) {
+    element.value = value;
   }
 
-  function syncSelectValueWithMin(fromElement, toElement, valuesFromElement, minToElement) {
-    var valueFromElement = fromElement.options[fromElement.selectedIndex].textContent;
-
-    valuesFromElement.forEach(function (val, index) {
-      if (valueFromElement === val) {
-        toElement.min = minToElement[index];
-        toElement.value = minToElement[index];
-      }
-    });
+  function syncValueAndMin(element, value) {
+    syncValue(element, value)
+    element.min = value;
   }
 
-  function syncSelectOptValueWithSelectOptValue(fromElement, toElement, valuesFromElement, valuesToElement) {
-    var valueFromElement = fromElement.options[roomNumber.selectedIndex].value;
+  checkinNotice.addEventListener('change', function () {
+    window.synchronizeFields(checkinNotice, checkoutNotice, ['12', '13', '14'], ['12', '13', '14'], syncValue);
+  });
 
-    valuesFromElement.forEach(function (val, index) {
-      if (val === valueFromElement) {
-        toElement.selectedIndex = toElement.querySelector('option[value="' + valuesToElement[index] + '"]').index;
-      }
-    });
-  }
+  checkoutNotice.addEventListener('change', function () {
+    window.synchronizeFields(checkoutNotice, checkinNotice, ['12', '13', '14'], ['12', '13', '14'], syncValue);
+  });
 
-  window.synchronizeFields(checkinNotice, checkoutNotice, 'change', syncSameSelect);
-  window.synchronizeFields(checkoutNotice, checkinNotice, 'change', syncSameSelect);
-  window.synchronizeFields(typeNotice, priceNotice, 'change', syncSelectValueWithMin, ['Квартира', 'Дворец', 'Лачуга'], [1000, 10000, 0]);
-  window.synchronizeFields(roomNumber, capacityNotice, 'change', syncSelectOptValueWithSelectOptValue, ['1', '2', '100'], ['0', '3', '3']);
+  typeNotice.addEventListener('change', function () {
+    window.synchronizeFields(typeNotice, priceNotice, ['flat', 'bungalo', 'palace'], ['1000', '0', '10000'], syncValueAndMin);
+  });
+
+  roomNumber.addEventListener('change', function () {
+    window.synchronizeFields(roomNumber, capacityNotice, ['1', '2', '100'], ['0', '3', '3'], syncValue);
+  });
 
   return {setAddress: setAddressNotice};
 
