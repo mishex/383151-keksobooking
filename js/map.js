@@ -62,11 +62,7 @@ window.tokyoMap = (function () {
 
   function initMap() {
     // pinPlaces = window.getRandomPlaces(NUMBER_PIN);
-    window.load(
-      urlLoadPins,
-      onSuccessLoadPins,
-      errorHandler
-    );
+    window.load(urlLoadPins, onSuccessLoadPins, errorHandler);
   }
 
 // ------*** functions ***-------

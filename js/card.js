@@ -43,8 +43,8 @@ window.getLodge = (function () {
 
     place.offer.photos.forEach(function (url, indexUrl) {
       var image = document.createElement('img');
-      image.width = "52";
-      image.height = "42";
+      image.width = '52';
+      image.height = '42';
       image.src = url;
       photosFragment.appendChild(image);
     });
