@@ -3,10 +3,10 @@
 'use strict';
 
 window.tokyoMap = (function () {
-
+  var urlLoadPins = 'https://intensive-javascript-server-kjgvxfepjl.now.sh/keksobooking/data';
   var pinPlaces = [];
 
-  var NUMBER_PIN = 8;
+  // var NUMBER_PIN = 8;
 
   var ENTER_KEY_CODE = 13;
   var ESC_KEY_CODE = 27;
@@ -42,10 +42,31 @@ window.tokyoMap = (function () {
     return pinPlaces[indexPinPlaces];
   }
 
-  function initMap() {
-    pinPlaces = window.getRandomPlaces(NUMBER_PIN);
+  function errorHandler(errorMessage) {
+    var node = document.createElement('div');
+    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+    node.style.position = 'absolute';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = '10px';
+
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement('afterbegin', node);
+  }
+
+  function onSuccessLoadPins(pins) {
+    pinPlaces = pinPlaces.concat(pins);
     window.insertPinsFragment(pinPlaces, tokyoPinMap);
     activatePin(tokyoPinMap.querySelector('#pin-0'));
+  }
+
+  function initMap() {
+    // pinPlaces = window.getRandomPlaces(NUMBER_PIN);
+    window.load(
+      urlLoadPins,
+      onSuccessLoadPins,
+      errorHandler
+    );
   }
 
 // ------*** functions ***-------

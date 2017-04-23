@@ -23,7 +23,7 @@ window.insertPinsFragment = (function () {
         }
 
         var pin = getPinTemplate();
-        pin.style = 'left: ' + place.offer.address.x + 'px; top: ' + place.offer.address.y + 'px';
+        pin.style = 'left: ' + place.location.x + 'px; top: ' + place.location.y + 'px';
         pin.tabIndex = '0';
         var pinImg = pin.querySelector('img');
         pinImg.src = place.author.avatar;
