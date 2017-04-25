@@ -62,8 +62,7 @@ window.tokyoMap = (function () {
     activatePin(tokyoPinMap.querySelector('#pin-0'));
   }
 
-  function updateMap(pins)
-  {
+  function updateMap(pins) {
     var oldPins = tokyoPinMap.querySelectorAll('.pin__notmain');
     oldPins.forEach(function (item) {
       item.parentNode.removeChild(item);

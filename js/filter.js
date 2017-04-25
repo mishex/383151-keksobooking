@@ -10,7 +10,7 @@
   var guestsNumber = filterElement.querySelector('#housing_guests-number');
   var features = filterElement.querySelector('#housing_features');
 
-  var setFilterFeatures = new Set();
+  var setFilterFeatures = [];
 
   function trueFunctionFilter(it) {
     return true;
@@ -54,8 +54,8 @@
 
   function featuresFilter() {
     return (function (it) {
-      for (let feature of setFilterFeatures) {
-        if (it.offer.features.indexOf(feature) === -1) {
+      for (var i = 0; i < setFilterFeatures.length; ++i) {
+        if (it.offer.features.indexOf(setFilterFeatures[i]) === -1) {
           return false;
         }
       }
@@ -151,9 +151,15 @@
   features.addEventListener('change', function (evt) {
     if (evt.target.tagName.toLowerCase() === 'input') {
       if (evt.target.checked) {
-        setFilterFeatures.add(evt.target.value);
+        if (setFilterFeatures.indexOf(evt.target.value) === -1) {
+          setFilterFeatures.push(evt.target.value);
+        }
       } else {
-        setFilterFeatures.delete(evt.target.value);
+        var indexSetFilterFeatures = setFilterFeatures.indexOf(evt.target.value);
+        if (indexSetFilterFeatures !== -1) {
+          setFilterFeatures = setFilterFeatures.slice(0, indexSetFilterFeatures).
+          concat(setFilterFeatures.slice(indexSetFilterFeatures + 1, indexSetFilterFeatures.length));
+        }
       }
     }
 
