@@ -16,9 +16,9 @@
     return true;
   }
 
-  function TypeFilterFlat(type) {
+  function typeFilter(typeOfBuild) {
     return (function (it) {
-      return it.offer.type === type;
+      return it.offer.type === typeOfBuild;
     });
   }
 
@@ -74,7 +74,9 @@
   function filterPins() {
     var pins = window.tokyoMap.getPinPlaces();
     for (var filter in filters) {
-      pins = pins.filter(filters[filter]);
+      if (filters.hasOwnProperty(filter)) {
+        pins = pins.filter(filters[filter]);
+      }
     }
 
     window.debounce(window.tokyoMap.updateMap.bind({}, pins));
@@ -88,7 +90,7 @@
       case 'flat':
       case 'house':
       case 'bungalo':
-        filters.type = TypeFilterFlat(evt.target.value);
+        filters.type = typeFilter(evt.target.value);
         break;
       default:
         filters.type = trueFunctionFilter;
@@ -166,6 +168,6 @@
     filters.features = featuresFilter();
 
     filterPins();
-  })
+  });
 
 })();
