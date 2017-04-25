@@ -5,6 +5,7 @@
 window.tokyoMap = (function () {
   var URL_LOAD_PINS = 'https://intensive-javascript-server-kjgvxfepjl.now.sh/keksobooking/data';
   var pinPlaces = [];
+  var filterPinPlaces = [];
 
   // var NUMBER_PIN = 8;
 
@@ -38,10 +39,6 @@ window.tokyoMap = (function () {
     mainPin.addEventListener('dragstart', onMainPinStartDrag);
   }
 
-  function getPinPlace(indexPinPlaces) {
-    return pinPlaces[indexPinPlaces];
-  }
-
   function getPinPlaces() {
     return pinPlaces;
   }
@@ -60,6 +57,7 @@ window.tokyoMap = (function () {
 
   function onSuccessLoadPins(pins) {
     pinPlaces = pinPlaces.concat(pins);
+    filterPinPlaces = pinPlaces;
     window.insertPinsFragment(pinPlaces, tokyoPinMap);
     activatePin(tokyoPinMap.querySelector('#pin-0'));
   }
@@ -71,6 +69,7 @@ window.tokyoMap = (function () {
       item.parentNode.removeChild(item);
     });
     window.insertPinsFragment(pins, tokyoPinMap);
+    filterPinPlaces = pins;
     activatePin(tokyoPinMap.querySelector('#pin-0'));
   }
 
@@ -94,7 +93,7 @@ window.tokyoMap = (function () {
     pin.classList.add('pin--active');
 
     if (pin.id.includes('pin-')) {
-      window.showDialog(pinPlaces[parseInt(pin.id.split('pin-')[1], 10)], window.getLodge);
+      window.showDialog(filterPinPlaces[parseInt(pin.id.split('pin-')[1], 10)], window.getLodge);
     }
   }
 
@@ -190,7 +189,6 @@ window.tokyoMap = (function () {
   return {
     init: initMap,
     setEvent: setEventMap,
-    getPinPlace: getPinPlace,
     getPinPlaces: getPinPlaces,
     updateMap: updateMap
   };
