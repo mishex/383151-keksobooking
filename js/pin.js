@@ -13,6 +13,7 @@ window.insertPinsFragment = (function () {
         function getPinTemplate() {
           var templatePin = document.createElement('div');
           templatePin.classList.add('pin');
+          templatePin.classList.add('pin__notmain');
           var pinImg = document.createElement('img');
           pinImg.width = '40';
           pinImg.height = '40';
