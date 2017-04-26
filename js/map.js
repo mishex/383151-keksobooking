@@ -3,8 +3,9 @@
 'use strict';
 
 window.tokyoMap = (function () {
-  var urlLoadPins = 'https://intensive-javascript-server-kjgvxfepjl.now.sh/keksobooking/data';
+  var URL_LOAD_PINS = 'https://intensive-javascript-server-kjgvxfepjl.now.sh/keksobooking/data';
   var pinPlaces = [];
+  var filterPinPlaces = [];
 
   // var NUMBER_PIN = 8;
 
@@ -38,8 +39,8 @@ window.tokyoMap = (function () {
     mainPin.addEventListener('dragstart', onMainPinStartDrag);
   }
 
-  function getPinPlace(indexPinPlaces) {
-    return pinPlaces[indexPinPlaces];
+  function getPinPlaces() {
+    return pinPlaces;
   }
 
   function errorHandler(errorMessage) {
@@ -56,18 +57,33 @@ window.tokyoMap = (function () {
 
   function onSuccessLoadPins(pins) {
     pinPlaces = pinPlaces.concat(pins);
+    filterPinPlaces = pinPlaces;
     window.insertPinsFragment(pinPlaces, tokyoPinMap);
+    activatePin(tokyoPinMap.querySelector('#pin-0'));
+  }
+
+  function updateMap(pins) {
+    var oldPins = tokyoPinMap.querySelectorAll('.pin__notmain');
+    oldPins.forEach(function (item) {
+      item.parentNode.removeChild(item);
+    });
+    window.insertPinsFragment(pins, tokyoPinMap);
+    filterPinPlaces = pins;
     activatePin(tokyoPinMap.querySelector('#pin-0'));
   }
 
   function initMap() {
     // pinPlaces = window.getRandomPlaces(NUMBER_PIN);
-    window.load(urlLoadPins, onSuccessLoadPins, errorHandler);
+    window.load(URL_LOAD_PINS, onSuccessLoadPins, errorHandler);
   }
 
 // ------*** functions ***-------
 
   function activatePin(pin) {
+    if (!pin) {
+      return;
+    }
+
     var activePin = tokyoPinMap.querySelector('.pin--active');
     if (activePin) {
       activePin.classList.remove('pin--active');
@@ -76,7 +92,7 @@ window.tokyoMap = (function () {
     pin.classList.add('pin--active');
 
     if (pin.id.includes('pin-')) {
-      window.showDialog(pinPlaces[parseInt(pin.id.split('pin-')[1], 10)], window.getLodge);
+      window.showDialog(filterPinPlaces[parseInt(pin.id.split('pin-')[1], 10)], window.getLodge);
     }
   }
 
@@ -172,7 +188,8 @@ window.tokyoMap = (function () {
   return {
     init: initMap,
     setEvent: setEventMap,
-    getPinPlace: getPinPlace
+    getPinPlaces: getPinPlaces,
+    updateMap: updateMap
   };
 })();
 

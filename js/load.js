@@ -6,10 +6,12 @@
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
-        onLoad(xhr.response);
-      } else {
-        onError('Не удалось загрузить данные, статус: ' + xhr.status + ' ' + xhr.statusText);
+      switch (xhr.status) {
+        case 200:
+          onLoad(xhr.response);
+          break;
+        default:
+          onError('Не удалось загрузить данные, статус: ' + xhr.status + ' ' + xhr.statusText);
       }
     });
     xhr.addEventListener('error', function () {
