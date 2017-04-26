@@ -1,5 +1,3 @@
-// synchronize-fields.js
-
 'use strict';
 
 window.synchronizeFields = (function (fromElement, toElement, valuesFromElement, valuesToElement, cb) {

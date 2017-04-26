@@ -1,5 +1,3 @@
-// debounce.js
-
 'use strict';
 
 (function () {

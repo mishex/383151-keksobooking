@@ -1,5 +1,3 @@
-// show-card.js
-
 'use strict';
 
 window.showDialog = (function () {
@@ -7,7 +5,6 @@ window.showDialog = (function () {
   var dialogTitle = dialog.querySelector('.dialog__title');
 
   return (function (pinPlace, renderPinPlace) {
-    // It's not closure element
     var dialogPanel = dialog.querySelector('.dialog__panel');
 
     if (typeof renderPinPlace === 'function') {

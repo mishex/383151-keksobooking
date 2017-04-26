@@ -1,9 +1,6 @@
-// form.js
-
 'use strict';
 
 window.formNoticePublishing = (function () {
-
   var notice = document.querySelector('.notice');
   var formNotice = notice.querySelector('.notice__form');
   var checkinNotice = formNotice.querySelector('#time');
@@ -23,7 +20,6 @@ window.formNoticePublishing = (function () {
   }
 
   function onFormNoticeInvald(evt) {
-    // evt.preventDefault();
     makeElementNoticeRed(evt.target);
   }
 

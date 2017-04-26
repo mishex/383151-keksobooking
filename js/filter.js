@@ -1,5 +1,3 @@
-// filter.js
-
 'use strict';
 
 window.filter = (function () {
@@ -12,54 +10,54 @@ window.filter = (function () {
 
   var setFilterFeatures = [];
 
-  var cbPins = {
+  var pinsMapMethods = {
     get: function () {
       return [];
     },
     show: function () {}
   };
 
-  function trueFunctionFilter(it) {
+  function filterTrueFunction(it) {
     return true;
   }
 
-  function typeFilter(typeOfBuild) {
+  function filterType(typeOfBuild) {
     return (function (it) {
       return it.offer.type === typeOfBuild;
     });
   }
 
-  function priceFilterMiddle(more, less) {
+  function filterPriceMiddle(more, less) {
     return (function (it) {
       return it.offer.price >= more && it.offer.price <= less;
     });
   }
 
-  function priceFilterMoreThan(more) {
+  function filterPriceMoreThan(more) {
     return (function (it) {
       return it.offer.price >= more;
     });
   }
 
-  function priceFilterLessThan(less) {
+  function filterPriceLessThan(less) {
     return (function (it) {
       return it.offer.price <= less;
     });
   }
 
-  function roomNumberFilter(num) {
+  function filterRoomNumber(num) {
     return (function (it) {
       return it.offer.rooms === num;
     });
   }
 
-  function guestsNumberFilter(num) {
+  function filterGuestsNumber(num) {
     return (function (it) {
       return it.offer.guests === num;
     });
   }
 
-  function featuresFilter() {
+  function FilterFeatures() {
     return (function (it) {
       for (var i = 0; i < setFilterFeatures.length; ++i) {
         if (it.offer.features.indexOf(setFilterFeatures[i]) === -1) {
@@ -71,36 +69,36 @@ window.filter = (function () {
   }
 
   var filters = {
-    type: trueFunctionFilter,
-    price: priceFilterMiddle(10000, 50000),
-    rooms: trueFunctionFilter,
-    guests: trueFunctionFilter,
-    features: trueFunctionFilter
+    type: filterTrueFunction,
+    price: filterPriceMiddle(10000, 50000),
+    rooms: filterTrueFunction,
+    guests: filterTrueFunction,
+    features: filterTrueFunction
   };
 
   function filterPins() {
-    var pins = cbPins.get();
+    var pins = pinsMapMethods.get();
     for (var filter in filters) {
       if (filters.hasOwnProperty(filter)) {
         pins = pins.filter(filters[filter]);
       }
     }
 
-    window.debounce(cbPins.show.bind({}, pins));
+    window.debounce(pinsMapMethods.show.bind({}, pins));
   }
 
   type.addEventListener('change', function (evt) {
     switch (evt.target.value) {
       case 'any':
-        filters.type = trueFunctionFilter;
+        filters.type = filterTrueFunction;
         break;
       case 'flat':
       case 'house':
       case 'bungalo':
-        filters.type = typeFilter(evt.target.value);
+        filters.type = filterType(evt.target.value);
         break;
       default:
-        filters.type = trueFunctionFilter;
+        filters.type = filterTrueFunction;
     }
 
     filterPins();
@@ -109,16 +107,16 @@ window.filter = (function () {
   price.addEventListener('change', function (evt) {
     switch (evt.target.value) {
       case 'middle':
-        filters.price = priceFilterMiddle(10000, 50000);
+        filters.price = filterPriceMiddle(10000, 50000);
         break;
       case 'low':
-        filters.price = priceFilterLessThan(10000);
+        filters.price = filterPriceLessThan(10000);
         break;
       case 'high':
-        filters.price = priceFilterMoreThan(50000);
+        filters.price = filterPriceMoreThan(50000);
         break;
       default:
-        filters.price = trueFunctionFilter;
+        filters.price = filterTrueFunction;
     }
 
     filterPins();
@@ -127,15 +125,15 @@ window.filter = (function () {
   roomNumber.addEventListener('change', function (evt) {
     switch (evt.target.value) {
       case 'any':
-        filters.rooms = trueFunctionFilter;
+        filters.rooms = filterTrueFunction;
         break;
       case '1':
       case '2':
       case '3':
-        filters.rooms = roomNumberFilter(parseInt(evt.target.value, 10));
+        filters.rooms = filterRoomNumber(parseInt(evt.target.value, 10));
         break;
       default:
-        filters.rooms = trueFunctionFilter;
+        filters.rooms = filterTrueFunction;
     }
 
     filterPins();
@@ -144,25 +142,23 @@ window.filter = (function () {
   guestsNumber.addEventListener('change', function (evt) {
     switch (evt.target.value) {
       case 'any':
-        filters.guests = trueFunctionFilter;
+        filters.guests = filterTrueFunction;
         break;
       case '1':
       case '2':
-        filters.guests = guestsNumberFilter(parseInt(evt.target.value, 10));
+        filters.guests = filterGuestsNumber(parseInt(evt.target.value, 10));
         break;
       default:
-        filters.guests = trueFunctionFilter;
+        filters.guests = filterTrueFunction;
     }
 
     filterPins();
   });
 
   features.addEventListener('change', function (evt) {
-    if (evt.target.tagName.toLowerCase() === 'input') {
-      if (evt.target.checked) {
-        if (setFilterFeatures.indexOf(evt.target.value) === -1) {
-          setFilterFeatures.push(evt.target.value);
-        }
+    if (evt.target.tagName === 'INPUT') {
+      if (evt.target.checked && setFilterFeatures.indexOf(evt.target.value) === -1) {
+        setFilterFeatures.push(evt.target.value);
       } else {
         var indexSetFilterFeatures = setFilterFeatures.indexOf(evt.target.value);
         if (indexSetFilterFeatures !== -1) {
@@ -172,18 +168,18 @@ window.filter = (function () {
       }
     }
 
-    filters.features = featuresFilter();
+    filters.features = FilterFeatures();
 
     filterPins();
   });
 
   function setPinsMethods(get, show) {
     if (typeof get === 'function') {
-      cbPins.get = get;
+      pinsMapMethods.get = get;
     }
 
     if (typeof show === 'function') {
-      cbPins.show = show;
+      pinsMapMethods.show = show;
     }
   }
 

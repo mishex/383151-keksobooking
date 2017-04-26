@@ -1,13 +1,9 @@
-// map.js
-
 'use strict';
 
 window.tokyoMap = (function () {
   var URL_LOAD_PINS = 'https://intensive-javascript-server-kjgvxfepjl.now.sh/keksobooking/data';
   var pinPlaces = [];
-  var filterPinPlaces = [];
-
-  // var NUMBER_PIN = 8;
+  var filteredPinPlaces = [];
 
   var ENTER_KEY_CODE = 13;
   var ESC_KEY_CODE = 27;
@@ -24,6 +20,8 @@ window.tokyoMap = (function () {
   var mainPin = tokyoPinMap.querySelector('.pin__main');
 
   var cbMoveMainPin;
+
+  var offsetData;
 
   function setEventMap(callbackMoveMainPin) {
     cbMoveMainPin = callbackMoveMainPin;
@@ -57,7 +55,7 @@ window.tokyoMap = (function () {
 
   function onSuccessLoadPins(pins) {
     pinPlaces = pinPlaces.concat(pins);
-    filterPinPlaces = pinPlaces;
+    filteredPinPlaces = pinPlaces;
     window.filter.filterPins();
   }
 
@@ -67,36 +65,38 @@ window.tokyoMap = (function () {
       item.parentNode.removeChild(item);
     });
     window.insertPinsFragment(pins, tokyoPinMap);
-    filterPinPlaces = pins;
-    activatePin(tokyoPinMap.querySelector('#pin-0'));
+    filteredPinPlaces = pins;
+    hideDialog();
   }
 
   function initMap() {
-    // pinPlaces = window.getRandomPlaces(NUMBER_PIN);
     window.load(URL_LOAD_PINS, onSuccessLoadPins, errorHandler);
   }
-
-// ------*** functions ***-------
 
   function activatePin(pin) {
     if (!pin) {
       return;
     }
 
-    var activePin = tokyoPinMap.querySelector('.pin--active');
-    if (activePin) {
-      activePin.classList.remove('pin--active');
+    var activatedPin = tokyoPinMap.querySelector('.pin--active');
+    if (activatedPin) {
+      activatedPin.classList.remove('pin--active');
     }
 
     pin.classList.add('pin--active');
 
     if (pin.id.includes('pin-')) {
-      window.showDialog(filterPinPlaces[parseInt(pin.id.split('pin-')[1], 10)], window.getLodge);
+      window.showDialog(filteredPinPlaces[parseInt(pin.id.split('pin-')[1], 10)], window.getLodge);
     }
   }
 
   function deactivatePin() {
-    tokyoPinMap.querySelector('.pin--active').classList.remove('pin--active');
+    var activatedPin = tokyoPinMap.querySelector('.pin--active');
+
+    if (activatedPin) {
+      activatedPin.classList.remove('pin--active');
+    }
+
     hideDialog();
   }
 
@@ -136,11 +136,8 @@ window.tokyoMap = (function () {
     }
   }
 
-  // Chrome doesn't allow access to event.dataTransfer in dragover
-  var offsetData;
-
   function onMainPinStartDrag(evt) {
-    if (evt.target.tagName.toLowerCase() === 'img') {
+    if (evt.target.tagName === 'IMG') {
       var style = window.getComputedStyle(evt.target.parentNode, null);
       offsetData = (parseInt(style.getPropertyValue('left'), 10) - evt.clientX);
       offsetData += ',' + (parseInt(style.getPropertyValue('top'), 10) - evt.clientY);
@@ -161,6 +158,10 @@ window.tokyoMap = (function () {
   }
 
   function onTokyoPinMapDragOver(evt) {
+    if (!offsetData) {
+      return;
+    }
+
     var offset = offsetData.split(',');
 
     var left = evt.clientX + parseInt(offset[0], 10);
@@ -184,14 +185,8 @@ window.tokyoMap = (function () {
     return false;
   }
 
-  return {
-    init: initMap,
-    setEvent: setEventMap,
-    getPinPlaces: getPinPlaces,
-    updateMap: updateMap
-  };
-})();
+  setEventMap(window.formNoticePublishing.setAddress);
+  window.filter.setPinsMethods(getPinPlaces, updateMap);
+  initMap();
 
-window.tokyoMap.setEvent(window.formNoticePublishing.setAddress);
-window.filter.setPinsMethods(window.tokyoMap.getPinPlaces, window.tokyoMap.updateMap);
-window.tokyoMap.init();
+})();
