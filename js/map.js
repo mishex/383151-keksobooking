@@ -193,5 +193,5 @@ window.tokyoMap = (function () {
 })();
 
 window.tokyoMap.setEvent(window.formNoticePublishing.setAddress);
-window.filter.setPinsMethods(window.tokyoMap.getPinPlaces, window.tokyoMap.updateMap)
+window.filter.setPinsMethods(window.tokyoMap.getPinPlaces, window.tokyoMap.updateMap);
 window.tokyoMap.init();
