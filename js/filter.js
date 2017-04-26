@@ -57,7 +57,7 @@ window.filter = (function () {
     });
   }
 
-  function FilterFeatures() {
+  function filterFeatures() {
     return (function (it) {
       for (var i = 0; i < setFilterFeatures.length; ++i) {
         if (it.offer.features.indexOf(setFilterFeatures[i]) === -1) {
@@ -168,7 +168,7 @@ window.filter = (function () {
       }
     }
 
-    filters.features = FilterFeatures();
+    filters.features = filterFeatures();
 
     filterPins();
   });

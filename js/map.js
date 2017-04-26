@@ -159,7 +159,7 @@ window.tokyoMap = (function () {
 
   function onTokyoPinMapDragOver(evt) {
     if (!offsetData) {
-      return;
+      return false;
     }
 
     var offset = offsetData.split(',');
