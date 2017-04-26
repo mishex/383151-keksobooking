@@ -2,7 +2,7 @@
 
 'use strict';
 
-(function () {
+window.filter = (function () {
   var filterElement = document.querySelector('.tokyo__filters');
   var type = filterElement.querySelector('#housing_type');
   var price = filterElement.querySelector('#housing_price');
@@ -11,6 +11,13 @@
   var features = filterElement.querySelector('#housing_features');
 
   var setFilterFeatures = [];
+
+  var cbPins = {
+    get: function () {
+      return [];
+    },
+    show: function () {}
+  };
 
   function trueFunctionFilter(it) {
     return true;
@@ -65,21 +72,21 @@
 
   var filters = {
     type: trueFunctionFilter,
-    price: trueFunctionFilter,
+    price: priceFilterMiddle(10000, 50000),
     rooms: trueFunctionFilter,
     guests: trueFunctionFilter,
     features: trueFunctionFilter
   };
 
   function filterPins() {
-    var pins = window.tokyoMap.getPinPlaces();
+    var pins = cbPins.get();
     for (var filter in filters) {
       if (filters.hasOwnProperty(filter)) {
         pins = pins.filter(filters[filter]);
       }
     }
 
-    window.debounce(window.tokyoMap.updateMap.bind({}, pins));
+    window.debounce(cbPins.show.bind({}, pins));
   }
 
   type.addEventListener('change', function (evt) {
@@ -170,4 +177,18 @@
     filterPins();
   });
 
+  function setPinsMethods(get, show) {
+    if (typeof get === 'function') {
+      cbPins.get = get;
+    }
+
+    if (typeof show === 'function') {
+      cbPins.show = show;
+    }
+  }
+
+  return {
+    filterPins: filterPins,
+    setPinsMethods: setPinsMethods
+  };
 })();

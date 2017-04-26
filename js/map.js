@@ -58,8 +58,7 @@ window.tokyoMap = (function () {
   function onSuccessLoadPins(pins) {
     pinPlaces = pinPlaces.concat(pins);
     filterPinPlaces = pinPlaces;
-    window.insertPinsFragment(pinPlaces, tokyoPinMap);
-    activatePin(tokyoPinMap.querySelector('#pin-0'));
+    window.filter.filterPins();
   }
 
   function updateMap(pins) {
@@ -193,5 +192,6 @@ window.tokyoMap = (function () {
   };
 })();
 
-window.tokyoMap.init();
 window.tokyoMap.setEvent(window.formNoticePublishing.setAddress);
+window.filter.setPinsMethods(window.tokyoMap.getPinPlaces, window.tokyoMap.updateMap)
+window.tokyoMap.init();
